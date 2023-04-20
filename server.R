@@ -1,12 +1,12 @@
 #Shiny
-library (shiny)
-library (ggplot2)
+library(shiny)
+library(ggplot2)
 
 server <- function (input, output) {
-  d <- diamonds[sample(which(diamonds$carat > 0), 1000),]
+  d <- diamonds[sample(which(diamonds$carat > 0), 2000),]
   
   model1 <-
-    lm(log10(price) ~ log10(carat) + as.factor (clarity), data = d)
+    lm(log10(price) ~ log10(carat) + as.factor(clarity), data = d)
   
   model1pred <- reactive({
     caratInput <- input$caratSize
