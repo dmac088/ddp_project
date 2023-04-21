@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dimond Price Predictor Pitch</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Dimond Price Predictor Pitch">
+  <meta name="author" content="Dan">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/default.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/custom.css"></link>
+<link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  
+  <hgroup class="auto-fadein">
+    <h1>Dimond Price Predictor Pitch</h1>
+    <h2>A linear model for predicting diamond price</h2>
+    <p>Dan<br/>Analytics helper</p>
+  </hgroup>
+  
+  <article></article>  
+  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  
+  <hgroup>
+    <h2>The Product</h2>
+  </hgroup>
+  
+  <article data-timings="">
+    <hr>
+
+<p>The diamond price predictor is a data product that is super helpful in finding a fair price for the diamond of your choice base on 2 predictor variables:</p>
+
+<ol>
+<li>Diamond Carat Size</li>
+<li>Diamond Clarity</li>
+</ol>
+
+<p>The application takes a saample of 2000 observations from the diamonds dataset which is included in ggplot package.</p>
+
+<p>You can find the deployed application on shinyapps.io here:</p>
+
+<p><a href="https://dmac088.shinyapps.io/ddp_project/">https://dmac088.shinyapps.io/ddp_project/</a></p>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-2" style="background:;">
+  
+  <hgroup>
+    <h2>Exploratory Data Analysis</h2>
+  </hgroup>
+  
+  <article data-timings="">
+    
+<div style='float:left;width:48%;'>
+  <p>The raw data</p>
+
+<pre><code class="r">ggplotly(ggplot(diamonds,
+  aes(carat, price))+
+  geom_point(color=&quot;cadetblue&quot;), 
+  height=300, width=400) 
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-1-1.png" alt="plot of chunk unnamed-chunk-1"></p>
+
+</div>
+<div style='float:right;width:48%;'>
+  <p>Log transformed data with clarity</p>
+
+<pre><code class="r">ggplotly(ggplot(diamonds,
+aes(log10(carat), log10(price), 
+    color=clarity)) + geom_point(), 
+height=300, width=400) 
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-2-1.png" alt="plot of chunk unnamed-chunk-2"></p>
+
+</div>
+<div>
+  
+</div>
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  
+  <hgroup>
+    <h2>Exploratory Data Analysis Cont&#39;d</h2>
+  </hgroup>
+  
+  <article data-timings="">
+    <p>From the 1st chart (raw data) we can see that there is a strong positive correlation between carat size and price, although with some heteroscedasticity, therefore it makes sense to log transform the data.</p>
+
+<p>From the 2nd chart we see the result of the log transformation on price and carat, and additionally overlay the clarity (categorical) dimension with color.</p>
+
+<p>It seems that there&#39;s definitely a relationship between clarity and price since we see very clear color clusters across the axes. Both carat and clarity look like good candidate predictors for our model, so lets proceed to fit a linear model and compute the goodness of fit (Rsq):</p>
+
+<pre><code class="r"> model1 &lt;- lm(log10(price) ~ log10(carat) + as.factor(clarity), data = diamonds)
+ summary(model1)$r.squared
+</code></pre>
+
+<pre><code>## [1] 0.9653684
+</code></pre>
+
+<p>We see that the resulting Rsq is quite good at 0.96, this model will make a nice data product for predicting diamond price.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  
+  <hgroup>
+    <h2>Summary</h2>
+  </hgroup>
+  
+  <article data-timings="">
+    <p>Thank you for taking the time to read this assigment for grading.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='The Product'>
+         1
+      </a>
+    </li>
+    
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Exploratory Data Analysis'>
+         2
+      </a>
+    </li>
+    
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Exploratory Data Analysis Cont&#39;d'>
+         3
+      </a>
+    </li>
+    
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Summary'>
+         4
+      </a>
+    </li>
+    
+    </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
